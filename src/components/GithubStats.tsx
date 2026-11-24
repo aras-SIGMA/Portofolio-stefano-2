@@ -1,5 +1,6 @@
 import { profile } from "../data/profile";
 import { Reveal, RevealItem, RevealStagger } from "./motion/Reveal";
+import ContributionGraph from "./ContributionGraph";
 
 export default function GithubStats() {
   const stats = [
@@ -46,6 +47,10 @@ export default function GithubStats() {
           <GithubIcon />
           github.com/{profile.username}
         </a>
+      </Reveal>
+
+      <Reveal delay={0.25} className="mt-8">
+        <ContributionGraph username={profile.username} />
       </Reveal>
     </section>
   );

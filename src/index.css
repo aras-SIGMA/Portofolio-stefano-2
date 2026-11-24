@@ -42,3 +42,15 @@ body {
   font-family: var(--font-body);
   transition: background-color 250ms ease, color 250ms ease;
 }
+
+/* Contribution graph levels — muted green, design-system friendly */
+.contrib-0 { background-color: var(--color-accent-soft); }
+.contrib-1 { background-color: #cfdcc6; }
+.contrib-2 { background-color: #a8c29d; }
+.contrib-3 { background-color: #7a9b76; }
+.contrib-4 { background-color: #5e7f5a; }
+.dark .contrib-0 { background-color: #3b353a; }
+.dark .contrib-1 { background-color: #42503e; }
+.dark .contrib-2 { background-color: #5a7052; }
+.dark .contrib-3 { background-color: #7a9b76; }
+.dark .contrib-4 { background-color: #a3c69c; }

@@ -1,14 +1,41 @@
+import HalftoneWordmarkFooter from "./ui/halftone-wordmark-footer";
 import { profile } from "../data/profile";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-surface-border">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-8 text-sm text-text-muted sm:flex-row">
-        <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
-        <p className="font-mono text-xs">
-          Built with React + Vite · Deployed on Vercel
-        </p>
-      </div>
-    </footer>
+    <div className="w-full">
+      <HalftoneWordmarkFooter
+        wordmark="stefano"
+        label="Stefano — Portofolio"
+        meta={`©${new Date().getFullYear()} · ${profile.location}`}
+        columns={[
+          {
+            title: "Work",
+            links: [
+              { label: "Projects", href: "#projects" },
+              { label: "Skills", href: "#skills" },
+              { label: "Certifications", href: "#certifications" },
+            ],
+          },
+          {
+            title: "Social",
+            links: [
+              { label: "GitHub", href: profile.github },
+              { label: "LinkedIn", href: profile.linkedin },
+              { label: "WhatsApp", href: profile.whatsapp },
+            ],
+          },
+          {
+            title: "Contact",
+            links: [
+              { label: profile.email, href: `mailto:${profile.email}` },
+              { label: "Back to top ↑", href: "#home" },
+            ],
+          },
+        ]}
+        preset="night"
+        height="480px"
+      />
+    </div>
   );
 }
