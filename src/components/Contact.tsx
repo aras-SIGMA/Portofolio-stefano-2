@@ -7,7 +7,7 @@ export default function Contact() {
     { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
     { label: "GitHub", value: `github.com/${profile.username}`, href: profile.github },
     { label: "LinkedIn", value: "linkedin.com/in/stefano", href: profile.linkedin },
-    { label: "WhatsApp", value: "+62 812-3456-7890", href: profile.whatsapp },
+    { label: "WhatsApp", value: "+62 858-8927-0732", href: profile.whatsapp },
   ];
 
   return (
