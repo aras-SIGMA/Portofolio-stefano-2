@@ -146,12 +146,20 @@ const METALS = {
   graphite: { color: '#4d4f55', roughness: 0.28 }
 };
 
+export type LanyardBackInfo = {
+  name: string;
+  role: string;
+  bio: string;
+  contact: string[];
+};
+
 type LanyardSettings = Required<
-  Omit<LanyardProps, "className" | "style" | "frontImage" | "backImage" | "strapImage">
+  Omit<LanyardProps, "className" | "style" | "frontImage" | "backImage" | "strapImage" | "backInfo">
 > & {
   frontImage?: string;
   backImage?: string;
   strapImage?: string;
+  backInfo?: LanyardBackInfo;
 };
 
 type CardLayout = {
@@ -491,6 +499,71 @@ const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, co
   if (image) drawFitted(ctx, image, canvas.width, canvas.height, fit);
 };
 
+const wrapText = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number) => {
+  const words = text.split(/\s+/);
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (ctx.measureText(next).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+};
+
+const paintBack = (canvas: HTMLCanvasElement, color: number[], info?: LanyardBackInfo, image?: HTMLImageElement | null, fit: "cover" | "contain" = "cover") => {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.fillStyle = toCss(color);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (image && !info) {
+    drawFitted(ctx, image, canvas.width, canvas.height, fit);
+    return;
+  }
+  if (!info) return;
+  const w = canvas.width;
+  const h = canvas.height;
+  const dark = luminance(color) < 0.5;
+  const ink = dark ? '#faf8f2' : '#2a2529';
+  const muted = dark ? 'rgba(250,248,242,0.62)' : 'rgba(42,37,41,0.58)';
+  const pad = w * 0.09;
+  const scale = w / FACE_WIDTH;
+  const font = (size: number, weight = 400) => `${weight} ${size * scale}px Inter, system-ui, sans-serif`;
+
+  ctx.strokeStyle = dark ? 'rgba(250,248,242,0.28)' : 'rgba(42,37,41,0.24)';
+  ctx.lineWidth = Math.max(1, 2 * scale);
+  ctx.strokeRect(pad, pad, w - pad * 2, h - pad * 2);
+
+  ctx.fillStyle = ink;
+  ctx.font = font(92, 600);
+  ctx.textBaseline = 'top';
+  ctx.fillText(info.name, pad + 18 * scale, pad + 34 * scale);
+
+  ctx.fillStyle = muted;
+  ctx.font = font(36, 500);
+  ctx.fillText(info.role, pad + 18 * scale, pad + 148 * scale);
+
+  ctx.fillStyle = dark ? 'rgba(250,248,242,0.16)' : 'rgba(42,37,41,0.14)';
+  ctx.fillRect(pad + 18 * scale, pad + 214 * scale, w - (pad + 18 * scale) * 2, Math.max(1, 2 * scale));
+
+  ctx.fillStyle = ink;
+  ctx.font = font(31, 400);
+  const lines = wrapText(ctx, info.bio, w - (pad + 18 * scale) * 2);
+  lines.forEach((line, i) => ctx.fillText(line, pad + 18 * scale, pad + 258 * scale + i * 48 * scale));
+
+  const footerY = h - pad - 62 * scale;
+  ctx.fillStyle = dark ? 'rgba(250,248,242,0.16)' : 'rgba(42,37,41,0.14)';
+  ctx.fillRect(pad + 18 * scale, footerY - 20 * scale, w - (pad + 18 * scale) * 2, Math.max(1, 2 * scale));
+  ctx.fillStyle = muted;
+  ctx.font = font(25, 400);
+  ctx.fillText(info.contact.join('  ·  '), pad + 18 * scale, footerY);
+};
+
 const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, color: number[]): number => {
   const across = 192;
   const along = image ? Math.max(64, Math.round((image.width / image.height) * across)) : across * 2;
@@ -764,6 +837,7 @@ const stepSimulation = (sim: Simulation, dt: number, physics: PhysicsParams, tim
 type LanyardProps = {
   frontImage?: string;
   backImage?: string;
+  backInfo?: LanyardBackInfo;
   imageFit?: "cover" | "contain";
   cardColor?: string;
   orientation?: "portrait" | "landscape";
@@ -789,6 +863,7 @@ type LanyardProps = {
 const Lanyard = ({
   frontImage,
   backImage,
+  backInfo,
   imageFit = 'cover',
   cardColor = '#ffffff',
   orientation = 'portrait',
@@ -817,6 +892,7 @@ const Lanyard = ({
   settingsRef.current = {
     frontImage,
     backImage,
+    backInfo,
     imageFit: imageFit === 'contain' ? 'contain' : 'cover',
     cardColor,
     orientation: orientation === 'landscape' ? 'landscape' : 'portrait',
@@ -981,7 +1057,7 @@ const Lanyard = ({
         backTexture.dispose();
       }
       paintFace(frontCanvas, images.front, color, s.imageFit);
-      paintFace(backCanvas, images.back || images.front, color, s.imageFit);
+      paintBack(backCanvas, color, s.backInfo, images.back || images.front, s.imageFit);
       frontTexture.needsUpdate = true;
       backTexture.needsUpdate = true;
       start();
@@ -1066,7 +1142,7 @@ const Lanyard = ({
           repaintStrap();
         });
       }
-      const faceKey = `${layoutKey}|${s.cardColor}|${s.imageFit}`;
+      const faceKey = `${layoutKey}|${s.cardColor}|${s.imageFit}|${JSON.stringify(s.backInfo)}`;
       if (faceKey !== applied.faceKey) paintFaces();
       if (s.strapColor !== applied.strapColor) repaintStrap();
 

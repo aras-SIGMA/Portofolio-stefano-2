@@ -116,6 +116,12 @@ export default function Hero() {
         >
           <Lanyard
             frontImage="/profile.jpg"
+            backInfo={{
+              name: profile.name,
+              role: profile.roles[0],
+              bio: profile.tagline,
+              contact: [profile.email, profile.location],
+            }}
             cardColor={cardColor}
             strapColor={strapColor}
             anchor="center"
