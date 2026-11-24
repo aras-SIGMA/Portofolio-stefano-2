@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { profile } from "../data/profile";
 import { useIsDark } from "../hooks/useIsDark";
 import { useTypewriter } from "../hooks/useTypewriter";
-import Lanyard from "./ui/Lanyard";
+import ProfileCard from "./ui/ProfileCard";
 
 export default function Hero() {
   const typed = useTypewriter(profile.roles);
@@ -17,9 +17,6 @@ export default function Hero() {
   });
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  const cardColor = isDark ? "#332e32" : "#faf8f2";
-  const strapColor = isDark ? "#f3f0e7" : "#2a2529";
 
   return (
     <section
@@ -107,28 +104,35 @@ export default function Hero() {
           </motion.p>
         </div>
 
-        {/* Kolom kanan: kartu identitas 3D */}
+        {/* Kolom kanan: kartu identitas interaktif */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
-          className="relative mx-auto h-[420px] w-full max-w-md sm:h-[520px]"
+          className="relative mx-auto w-full max-w-md"
         >
-          <Lanyard
-            frontImage="/profile.jpg"
-            backInfo={{
-              name: profile.name,
-              role: profile.roles[0],
-              bio: profile.tagline,
-              contact: [profile.email, profile.location],
-            }}
-            cardColor={cardColor}
-            strapColor={strapColor}
-            anchor="center"
-            size={0.62}
-            strapLength={0.5}
-            metal="graphite"
-            interactive
+          <ProfileCard
+            avatarUrl="/profile.jpg"
+            miniAvatarUrl="/profile.jpg"
+            name={profile.name}
+            title={profile.roles[0]}
+            handle={profile.username}
+            status="Siap PKL"
+            statusColor="#7a9b76"
+            contactText="Contact"
+            theme={isDark ? "dark" : "light"}
+            holo={0.8}
+            glare={0.5}
+            tiltStrength={12}
+            parallax={8}
+            radius={16}
+            enableTilt
+            intro
+            showUserInfo
+            enableMobileTilt={false}
+            onContactClick={() =>
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+            }
           />
         </motion.div>
       </motion.div>
