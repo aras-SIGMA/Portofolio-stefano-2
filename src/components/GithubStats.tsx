@@ -1,10 +1,12 @@
 import { profile } from "../data/profile";
 import { Reveal, RevealItem, RevealStagger } from "./motion/Reveal";
-import ContributionGraph from "./ContributionGraph";
+import { useGithubActivity } from "../hooks/useGithubActivity";
+import ActivityHeatmap from "./ui/activity-heatmap";
 
 export default function GithubStats() {
+  const { data, live } = useGithubActivity(profile.username);
   const stats = [
-    { label: "Public Repos", value: "21" },
+    { label: "Public Repos", value: "22" },
     { label: "Followers", value: "9" },
     { label: "Fokus", value: "Web & Mobile" },
     { label: "Status", value: "Open to PKL" },
@@ -50,7 +52,24 @@ export default function GithubStats() {
       </Reveal>
 
       <Reveal delay={0.25} className="mt-8">
-        <ContributionGraph username={profile.username} />
+        <div className="rounded-2xl border border-surface-border bg-surface-card p-6">
+          <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+            <h3 className="font-display text-base font-semibold">
+              Contribution Graph
+            </h3>
+            <p className="font-mono text-xs text-text-muted">
+              {live
+                ? "kontribusi setahun terakhir"
+                : "contoh data — menunggu GitHub"}
+            </p>
+          </div>
+          <ActivityHeatmap
+            data={data}
+            days={365}
+            unit=""
+            defaultView="calendar"
+          />
+        </div>
       </Reveal>
     </section>
   );

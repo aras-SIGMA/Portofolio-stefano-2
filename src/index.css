@@ -22,6 +22,8 @@
   --font-display: "Poppins", "Space Grotesk", sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  /* shadcn-style components use font-sans; keep it on the project body font */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Dark mode: tokens swap (charcoal canvas, ivory ink) */
@@ -36,6 +38,22 @@
   --color-accent-soft: #3b353a;
 }
 
+/* shadcn token aliases — ActivityHeatmap and other shadcn-style components
+   use these names. Reference project tokens so .dark overrides propagate. */
+@theme inline {
+  --color-background: var(--color-bg-base);
+  --color-foreground: var(--color-text-main);
+  --color-card: var(--color-surface-card);
+  --color-card-foreground: var(--color-text-main);
+  --color-popover: var(--color-surface-card);
+  --color-popover-foreground: var(--color-text-main);
+  --color-muted: var(--color-accent-soft);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-border: var(--color-surface-border);
+  --color-ring: var(--color-primary);
+  --color-accent: var(--color-accent-soft);
+}
+
 body {
   background-color: var(--color-bg-base);
   color: var(--color-text-main);
@@ -43,14 +61,3 @@ body {
   transition: background-color 250ms ease, color 250ms ease;
 }
 
-/* Contribution graph levels — muted green, design-system friendly */
-.contrib-0 { background-color: var(--color-accent-soft); }
-.contrib-1 { background-color: #cfdcc6; }
-.contrib-2 { background-color: #a8c29d; }
-.contrib-3 { background-color: #7a9b76; }
-.contrib-4 { background-color: #5e7f5a; }
-.dark .contrib-0 { background-color: #3b353a; }
-.dark .contrib-1 { background-color: #42503e; }
-.dark .contrib-2 { background-color: #5a7052; }
-.dark .contrib-3 { background-color: #7a9b76; }
-.dark .contrib-4 { background-color: #a3c69c; }
