@@ -8,15 +8,15 @@
 - [x] Dev server jalan, dark mode OK, struktur folder rapi
 
 ## Phase 2: Core Sections
-- [ ] Task 3: Hero section (foto, nama, typing effect)
-- [ ] Task 4: About Me
-- [ ] Task 5: Projects (GitHub API + fallback)
-- [ ] Task 6: Skills & Tools
-- [ ] Task 7: Sertifikasi & Training
-- [ ] Task 8: GitHub Contribution stats
+- [x] Task 3: Hero section (foto, nama, typing effect)
+- [x] Task 4: About Me
+- [x] Task 5: Projects (GitHub API + fallback)
+- [x] Task 6: Skills & Tools
+- [x] Task 7: Sertifikasi & Training
+- [x] Task 8: GitHub Contribution stats
 
 ## Checkpoint 2
-- [ ] Semua section utama tampil & responsif
+- [x] Semua section utama tampil & responsif
 
 ## Phase 3: Contact & Polish
 - [ ] Task 9: Contact & Footer
