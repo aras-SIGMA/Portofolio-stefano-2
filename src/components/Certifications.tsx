@@ -1,7 +1,9 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { certifications } from "../data/certifications";
+import { certifications, type CertificationCategory } from "../data/certifications";
+import { useIsDark } from "../hooks/useIsDark";
 import { Reveal } from "./motion/Reveal";
+import GlassFolder, { type FolderFile } from "./ui/glass-folder-cards";
 
 const certImages = import.meta.glob("../assets/sertifikat_*.webp", {
   eager: true,
@@ -10,6 +12,50 @@ const certImages = import.meta.glob("../assets/sertifikat_*.webp", {
 
 const certImage = (file?: string) =>
   file ? certImages[`../assets/${file}`] : undefined;
+
+const CATEGORIES: CertificationCategory[] = [
+  "Data & AI",
+  "Software Engineering",
+  "Professional Skills",
+];
+
+/** Satu folder glass per kategori; isinya file-file sertifikat. */
+function CategoryFolder({
+  category,
+  index,
+}: {
+  category: CertificationCategory;
+  index: number;
+}) {
+  const isDark = useIsDark();
+  const items = useMemo(
+    () =>
+      certifications
+        .filter((c) => c.category === category)
+        .map<FolderFile>((c) => ({
+          name: c.title,
+          meta: `${c.issuer} · ${c.year}`,
+          image: certImage(c.image),
+          href: c.link,
+        })),
+    [category],
+  );
+
+  const art = (["glacier", "dusk", "verdant"] as const)[index % 3];
+
+  return (
+    <GlassFolder
+      label={category}
+      tone={isDark ? "dark" : "light"}
+      art={art}
+      seed={index * 7 + 3}
+      files={items}
+      action="none"
+      width={340}
+      className="max-w-full"
+    />
+  );
+}
 
 export default function Certifications() {
   const ref = useRef<HTMLElement>(null);
@@ -29,6 +75,11 @@ export default function Certifications() {
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           Sertifikasi &amp; Training
         </h2>
+        <p className="mt-3 max-w-2xl text-sm text-text-muted">
+          Semua sertifikat dikelompokkan per kategori. Arahkan kursor untuk
+          membuka map, klik untuk melihat isinya, lalu klik salah satu
+          sertifikat untuk memverifikasi di Dicoding.
+        </p>
       </Reveal>
 
       <div className="relative mt-10 pl-6">
@@ -39,55 +90,30 @@ export default function Certifications() {
           className="absolute left-0 top-0 h-full w-px origin-top bg-text-main"
         />
 
-        <ol className="space-y-0">
-          {certifications.map((c, i) => (
-            <motion.li
-              key={c.title}
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
+        <div className="flex flex-wrap items-end justify-center gap-x-10 gap-y-16 py-6">
+          {CATEGORIES.map((category, i) => (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.45, delay: i * 0.08, ease: "easeOut" }}
-              className="relative pb-10 last:pb-0"
+              transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
             >
-              <span className="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full border border-surface-border bg-primary" />
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-display text-lg font-semibold">{c.title}</h3>
-                <span className="font-mono text-xs text-text-muted">
-                  {c.year}
-                </span>
-              </div>
-              <p className="mt-1 text-sm text-text-muted">
-                {c.issuer}
-                {c.link && (
-                  <>
-                    {" · "}
-                    <a
-                      href={c.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-text-main underline-offset-4 hover:underline"
-                    >
-                      lihat sertifikat
-                    </a>
-                  </>
-                )}
-              </p>
-              {certImage(c.image) && (
-                <a
-                  href={c.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group mt-4 block max-w-xs overflow-hidden rounded-lg border border-surface-border"
-                >
-                  <img
-                    src={certImage(c.image)}
-                    alt={`Sertifikat ${c.title}`}
-                    loading="lazy"
-                    className="aspect-[1.414] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                  />
+              <CategoryFolder category={category} index={i} />
+            </motion.div>
+          ))}
+        </div>
+
+        <ol className="sr-only">
+          {certifications.map((c) => (
+            <li key={c.title}>
+              {c.title} — {c.issuer} {c.year}
+              {c.link ? (
+                <a href={c.link} target="_blank" rel="noreferrer">
+                  verifikasi
                 </a>
-              )}
-            </motion.li>
+              ) : null}
+            </li>
           ))}
         </ol>
       </div>
