@@ -19,8 +19,8 @@
 - [x] Semua section utama tampil & responsif
 
 ## Phase 3: Contact & Polish
-- [ ] Task 9: Contact & Footer
-- [ ] Task 10: Animasi & interaksi
+- [x] Task 9: Contact & Footer
+- [x] Task 10: Animasi & interaksi
 - [ ] Task 11: Responsive + SEO dasar
 - [ ] Task 12: Build & deploy ke Vercel
 
