@@ -42,9 +42,12 @@ export function useGithubRepos() {
         // gabungkan: featured statis dulu, lalu sisanya dari API
         const featured = fallbackProjects.filter((p) => p.featured);
         const featuredNames = new Set(featured.map((p) => p.name.toLowerCase()));
-        const extra = mapped.filter(
-          (p) => !featuredNames.has(p.name.toLowerCase()),
-        );
+        const seen = new Set(featured.map((p) => p.repo));
+        const extra = mapped.filter((p) => {
+          if (featuredNames.has(p.name.toLowerCase()) || seen.has(p.repo)) return false;
+          seen.add(p.repo);
+          return true;
+        });
 
         if (!cancelled) {
           setProjects([...featured, ...extra]);
