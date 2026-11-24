@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — see design.md
+  60-40-10: bg-base = 60% canvas, surface-card/accent-soft = 40% surfaces,
+  text-main/primary = 10% accent.
+*/
+@theme {
+  --color-bg-base: #f3f0e7;
+  --color-surface-card: #faf8f2;
+  --color-surface-border: #e3ded2;
+  --color-text-main: #2a2529;
+  --color-text-muted: #6e6660;
+  --color-primary: #2a2529;
+  --color-primary-contrast: #f3f0e7;
+  --color-accent-soft: #e9e3d5;
+
+  --color-success: #7a9b76;
+  --color-warning: #c9a227;
+  --color-danger: #b4574e;
+
+  --font-display: "Poppins", "Space Grotesk", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Dark mode: tokens swap (charcoal canvas, ivory ink) */
+.dark {
+  --color-bg-base: #2a2529;
+  --color-surface-card: #332e32;
+  --color-surface-border: #453e43;
+  --color-text-main: #f3f0e7;
+  --color-text-muted: #a79e97;
+  --color-primary: #f3f0e7;
+  --color-primary-contrast: #2a2529;
+  --color-accent-soft: #3b353a;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  transition: background-color 250ms ease, color 250ms ease;
+}
