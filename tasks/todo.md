@@ -2,10 +2,10 @@
 
 ## Phase 1: Foundation
 - [x] Task 1: Setup React + Vite + Tailwind
-- [ ] Task 2: Navbar + Dark mode toggle + smooth scroll
+- [x] Task 2: Navbar + Dark mode toggle + smooth scroll
 
 ## Checkpoint 1
-- [ ] Dev server jalan, dark mode OK, struktur folder rapi
+- [x] Dev server jalan, dark mode OK, struktur folder rapi
 
 ## Phase 2: Core Sections
 - [ ] Task 3: Hero section (foto, nama, typing effect)
