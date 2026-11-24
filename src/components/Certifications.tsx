@@ -3,6 +3,14 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { certifications } from "../data/certifications";
 import { Reveal } from "./motion/Reveal";
 
+const certImages = import.meta.glob("../assets/sertifikat_*.webp", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+const certImage = (file?: string) =>
+  file ? certImages[`../assets/${file}`] : undefined;
+
 export default function Certifications() {
   const ref = useRef<HTMLElement>(null);
   // Progress line timeline: tumbuh mengikuti scroll
@@ -64,6 +72,21 @@ export default function Certifications() {
                   </>
                 )}
               </p>
+              {certImage(c.image) && (
+                <a
+                  href={c.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group mt-4 block max-w-xs overflow-hidden rounded-lg border border-surface-border"
+                >
+                  <img
+                    src={certImage(c.image)}
+                    alt={`Sertifikat ${c.title}`}
+                    loading="lazy"
+                    className="aspect-[1.414] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                </a>
+              )}
             </motion.li>
           ))}
         </ol>
