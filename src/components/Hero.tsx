@@ -5,6 +5,7 @@ import { useI18n } from "../i18n";
 import { useIsDark } from "../hooks/useIsDark";
 import { useTypewriter } from "../hooks/useTypewriter";
 import ProfileCard from "./ui/ProfileCard";
+import { InteractiveGrid } from "./ui/interactive-grid";
 
 export default function Hero() {
   const { t } = useI18n();
@@ -26,6 +27,12 @@ export default function Hero() {
       id="home"
       className="relative mx-auto flex min-h-[calc(100vh-64px)] max-w-6xl items-center overflow-hidden px-6 py-20"
     >
+      {/* Background: grid interaktif mengikuti pointer */}
+      <InteractiveGrid
+        cellSize={44}
+        className="text-text-main opacity-60 [mask-image:radial-gradient(70%_60%_at_50%_45%,white,transparent)]"
+      />
+
       {/* Background parallax: lingkaran tonal mengikuti scroll */}
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], [0, -80]) }}
