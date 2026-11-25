@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { fallbackProjects, type Project } from "../data/projects";
+import { safeHttpUrl } from "../lib/safeUrl";
 
 const GITHUB_USER = "aras-SIGMA";
+const FETCH_TIMEOUT_MS = 8000;
 
 export function useGithubRepos() {
   const [projects, setProjects] = useState<Project[]>(fallbackProjects);
@@ -9,14 +11,18 @@ export function useGithubRepos() {
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     async function load() {
       try {
         const res = await fetch(
-          `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30`,
+          `https://api.github.com/users/${encodeURIComponent(GITHUB_USER)}/repos?sort=updated&per_page=30`,
+          { signal: controller.signal },
         );
         if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-        const repos = await res.json();
+        const repos: unknown = await res.json();
+        if (!Array.isArray(repos)) throw new Error("Invalid GitHub API payload");
 
         // ponytail: filter manual — exclude profile README & ujian/laporan repo
         const skip = new Set([
@@ -29,15 +35,26 @@ export function useGithubRepos() {
           "portofolio-stefano",
         ]);
 
-        const mapped: Project[] = repos
-          .filter((r: any) => !r.fork && !skip.has(r.name.toLowerCase()))
-          .map((r: any) => ({
-            name: r.name.replace(/[-_]/g, " ").trim(),
-            description: r.description ?? "Project pribadi — lihat repo untuk detail.",
-            language: r.language ?? "Lainnya",
-            demo: r.homepage || undefined,
-            repo: r.html_url,
-          }));
+        const mapped: Project[] = [];
+        for (const r of repos) {
+          if (!r || typeof r !== "object") continue;
+          const rec = r as Record<string, unknown>;
+          const rawName = typeof rec.name === "string" ? rec.name : "";
+          const repoUrl = safeHttpUrl(rec.html_url);
+          if (!rawName || !repoUrl || rec.fork === true || skip.has(rawName.toLowerCase())) {
+            continue;
+          }
+          mapped.push({
+            name: rawName.replace(/[-_]/g, " ").trim(),
+            description:
+              typeof rec.description === "string" && rec.description.trim()
+                ? rec.description.trim()
+                : "Project pribadi — lihat repo untuk detail.",
+            language: typeof rec.language === "string" && rec.language ? rec.language : "Lainnya",
+            demo: safeHttpUrl(rec.homepage),
+            repo: repoUrl,
+          });
+        }
 
         // gabungkan: featured statis dulu, lalu sisanya dari API
         const featured = fallbackProjects.filter((p) => p.featured);
@@ -58,12 +75,16 @@ export function useGithubRepos() {
           setProjects(fallbackProjects);
           setLoading(false);
         }
+      } finally {
+        window.clearTimeout(timer);
       }
     }
 
     load();
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
+      controller.abort();
     };
   }, []);
 

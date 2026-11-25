@@ -171,8 +171,10 @@ const HWF_CSS = `
 }
 .hwf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (max-width: 720px) {
-  .hwf-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 18px; }
+  .hwf-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 14px; padding-top: 20px; }
   .hwf-brand { grid-column: 1 / -1; }
+  .hwf-col a, .hwf-up { display: inline-block; padding: 3px 0; }
+  .hwf-rule { margin-top: 14px; padding-top: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hwf-col a, .hwf-up { transition: none; }
@@ -476,11 +478,20 @@ export default function HalftoneWordmarkFooter({
           <nav className="hwf-col" key={col.title} aria-label={col.title}>
             <h3>{col.title}</h3>
             <ul>
-              {col.links.map((l) => (
-                <li key={l.label}>
-                  <a href={l.href || "#"}>{l.label}</a>
-                </li>
-              ))}
+              {col.links.map((l) => {
+                const isExternal = Boolean(l.href && /^https?:\/\//i.test(l.href))
+                return (
+                  <li key={l.label}>
+                    <a
+                      href={l.href || "#"}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </nav>
         ))}
