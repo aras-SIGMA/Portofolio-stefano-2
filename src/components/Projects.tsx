@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useGithubRepos } from "../hooks/useGithubRepos";
+import { useI18n } from "../i18n";
 import { Reveal } from "./motion/Reveal";
 
 export default function Projects() {
+  const { t } = useI18n();
   const { projects, loading } = useGithubRepos();
   const trackRef = useRef<HTMLDivElement>(null);
   const [canLeft, setCanLeft] = useState(false);
@@ -36,7 +38,7 @@ export default function Projects() {
           Project &amp; Karya
         </h2>
         <p className="mt-4 max-w-xl text-text-muted">
-          Project pribadi dan eksperimen — geser untuk melihat semua karya.
+          {t("projects.subtitle")}
         </p>
       </Reveal>
 
@@ -56,7 +58,7 @@ export default function Projects() {
             <button
               onClick={() => scrollBy(-1)}
               disabled={!canLeft}
-              aria-label="Geser ke kiri"
+              aria-label={t("projects.scrollLeft")}
               className="flex h-10 w-10 items-center justify-center rounded-full border border-surface-border bg-surface-card transition-all duration-200 enabled:hover:bg-accent-soft disabled:opacity-30"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
@@ -64,7 +66,7 @@ export default function Projects() {
             <button
               onClick={() => scrollBy(1)}
               disabled={!canRight}
-              aria-label="Geser ke kanan"
+              aria-label={t("projects.scrollRight")}
               className="flex h-10 w-10 items-center justify-center rounded-full border border-surface-border bg-surface-card transition-all duration-200 enabled:hover:bg-accent-soft disabled:opacity-30"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
@@ -97,7 +99,7 @@ export default function Projects() {
                 </div>
 
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-text-muted">
-                  {p.description}
+                  {p.description || t("projects.fallbackDesc")}
                 </p>
 
                 <div className="mt-5 flex items-center justify-between border-t border-surface-border pt-4">
@@ -112,7 +114,7 @@ export default function Projects() {
                         rel="noreferrer"
                         className="text-text-main underline-offset-4 hover:underline"
                       >
-                        Demo
+                        {t("projects.demo")}
                       </a>
                     )}
                     <a
@@ -121,7 +123,7 @@ export default function Projects() {
                       rel="noreferrer"
                       className="text-text-main underline-offset-4 hover:underline"
                     >
-                      Repo
+                      {t("projects.repo")}
                     </a>
                   </div>
                 </div>

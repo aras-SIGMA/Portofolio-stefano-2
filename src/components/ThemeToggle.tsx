@@ -1,6 +1,8 @@
 import { useTheme } from "../hooks/useTheme";
+import { useI18n } from "../i18n";
 
 export default function ThemeToggle() {
+  const { t } = useI18n();
   const { theme, toggle } = useTheme();
   const isDark = theme === "dark";
 
@@ -9,7 +11,11 @@ export default function ThemeToggle() {
       onClick={toggle}
       role="switch"
       aria-checked={isDark}
-      aria-label={isDark ? "Matikan dark mode" : "Aktifkan dark mode"}
+      aria-label={
+        isDark
+          ? t("theme.disableDark")
+          : t("theme.enableDark")
+      }
       className="relative inline-flex h-7 w-14 shrink-0 cursor-pointer items-center rounded-full border border-surface-border bg-surface-card transition-colors duration-[250ms]"
     >
       <span

@@ -21,6 +21,7 @@ import {
   Typescript01Icon,
 } from "@hugeicons/core-free-icons";
 import { skillGroups } from "../data/skills";
+import { useI18n, type TKey } from "../i18n";
 import { Reveal } from "./motion/Reveal";
 
 // Icon per skill; fallback CodeIcon untuk yang tidak punya brand icon di free set
@@ -44,7 +45,15 @@ const skillIcons: Record<string, typeof CodeIcon> = {
   Figma: FigmaIcon,
 };
 
+const categoryKeys: Record<string, TKey> = {
+  Frontend: "skills.frontend",
+  Mobile: "skills.mobile",
+  Backend: "skills.backend",
+  "Bahasa & Lainnya": "skills.other",
+};
+
 export default function Skills() {
+  const { t } = useI18n();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -72,8 +81,8 @@ export default function Skills() {
             Skills &amp; Tools
           </p>
           <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Keahlian
-          </h2>
+          {t("skills.title")}
+        </h2>
         </Reveal>
 
         <div className="mt-10 grid gap-8 sm:grid-cols-2">
@@ -87,7 +96,7 @@ export default function Skills() {
               className="rounded-2xl border border-surface-border bg-surface-card p-6"
             >
               <h3 className="font-display text-base font-semibold">
-                {group.category}
+                {t(categoryKeys[group.category] ?? "skills.other")}
               </h3>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {group.skills.map((skill) => (

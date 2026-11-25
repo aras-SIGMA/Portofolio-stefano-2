@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { profile } from "../data/profile";
+import { useI18n } from "../i18n";
 import { Reveal, RevealItem, RevealStagger } from "./motion/Reveal";
 
 export default function Contact() {
+  const { t } = useI18n();
   const channels = [
     { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
     { label: "GitHub", value: `github.com/${profile.username}`, href: profile.github },
@@ -17,11 +19,10 @@ export default function Contact() {
           Contact
         </p>
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          Mari Terhubung
+          {t("contact.title")}
         </h2>
         <p className="mt-4 max-w-xl text-text-muted">
-          Terbuka untuk kesempatan PKL, kolaborasi project, atau sekadar
-          diskusi seputar web &amp; mobile development.
+          {t("contact.subtitle")}
         </p>
       </Reveal>
 

@@ -1,8 +1,10 @@
 import HalftoneWordmarkFooter from "./ui/halftone-wordmark-footer";
 import { profile } from "../data/profile";
+import { useI18n } from "../i18n";
 import { useTheme } from "../hooks/useTheme";
 
 export default function Footer() {
+  const { t } = useI18n();
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -20,7 +22,7 @@ export default function Footer() {
         meta={`©${new Date().getFullYear()} · ${profile.location}`}
         columns={[
           {
-            title: "Work",
+            title: t("footer.work"),
             links: [
               { label: "Projects", href: "#projects" },
               { label: "Skills", href: "#skills" },
@@ -28,7 +30,7 @@ export default function Footer() {
             ],
           },
           {
-            title: "Social",
+            title: t("footer.social"),
             links: [
               { label: "GitHub", href: profile.github },
               { label: "LinkedIn", href: profile.linkedin },
@@ -36,10 +38,10 @@ export default function Footer() {
             ],
           },
           {
-            title: "Contact",
+            title: t("footer.contact"),
             links: [
               { label: profile.email, href: `mailto:${profile.email}` },
-              { label: "Back to top ↑", href: "#home" },
+              { label: t("footer.backToTop"), href: "#home" },
             ],
           },
         ]}

@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { profile } from "../data/profile";
+import { useI18n } from "../i18n";
 import { useIsDark } from "../hooks/useIsDark";
 import { useTypewriter } from "../hooks/useTypewriter";
 import ProfileCard from "./ui/ProfileCard";
 
 export default function Hero() {
+  const { t } = useI18n();
   const typed = useTypewriter(profile.roles);
   const ref = useRef<HTMLElement>(null);
   const isDark = useIsDark();
@@ -43,7 +45,7 @@ export default function Hero() {
             transition={{ delay: 0.4, duration: 0.4 }}
             className="mx-auto w-fit rounded-full border border-surface-border bg-surface-card px-3 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text-muted lg:mx-0"
           >
-            Open to PKL
+            {t("hero.badge")}
           </motion.div>
 
           <motion.h1
@@ -71,7 +73,7 @@ export default function Hero() {
             transition={{ delay: 0.45, duration: 0.5 }}
             className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-text-muted lg:mx-0"
           >
-            {profile.tagline}
+            {t("hero.tagline")}
           </motion.p>
 
           <motion.div
@@ -84,13 +86,13 @@ export default function Hero() {
               href="#projects"
               className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-contrast transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(42,37,41,0.15)]"
             >
-              Lihat Project
+              {t("hero.viewProjects")}
             </a>
             <a
               href="#contact"
               className="rounded-full border border-surface-border px-6 py-3 text-sm font-medium text-text-main transition-colors duration-200 hover:bg-accent-soft"
             >
-              Hubungi Saya
+              {t("hero.contactMe")}
             </a>
           </motion.div>
 
@@ -100,7 +102,7 @@ export default function Hero() {
             transition={{ delay: 0.8 }}
             className="mt-12 font-mono text-xs uppercase tracking-[0.08em] text-text-muted"
           >
-            {profile.location} · {profile.status}
+            {profile.location} · {t("profile.statusFull")}
           </motion.p>
         </div>
 
@@ -116,7 +118,7 @@ export default function Hero() {
             name={profile.name}
             title={profile.roles[0]}
             handle={profile.username}
-            status="Siap PKL"
+            status={t("profile.statusShort")}
             statusColor="#7a9b76"
             contactText="Contact"
             theme={isDark ? "dark" : "light"}

@@ -1,15 +1,17 @@
 import { profile } from "../data/profile";
+import { useI18n } from "../i18n";
 import { Reveal, RevealItem, RevealStagger } from "./motion/Reveal";
 import { useGithubActivity } from "../hooks/useGithubActivity";
 import ActivityHeatmap from "./ui/activity-heatmap";
 
 export default function GithubStats() {
+  const { t } = useI18n();
   const { data, live } = useGithubActivity(profile.username);
   const stats = [
-    { label: "Public Repos", value: "22" },
-    { label: "Followers", value: "9" },
-    { label: "Fokus", value: "Web & Mobile" },
-    { label: "Status", value: "Open to PKL" },
+    { label: t("github.repos"), value: "22" },
+    { label: t("github.followers"), value: "9" },
+    { label: t("github.focus"), value: t("github.focusValue") },
+    { label: t("github.status"), value: t("github.statusValue") },
   ];
 
   return (
@@ -19,7 +21,7 @@ export default function GithubStats() {
           GitHub
         </p>
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          Kontribusi &amp; Statistik
+          {t("github.title")}
         </h2>
       </Reveal>
 
@@ -59,8 +61,8 @@ export default function GithubStats() {
             </h3>
             <p className="font-mono text-xs text-text-muted">
               {live
-                ? "kontribusi setahun terakhir"
-                : "contoh data — menunggu GitHub"}
+                ? t("github.lastYear")
+                : t("github.sample")}
             </p>
           </div>
           <ActivityHeatmap

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { useI18n } from "../i18n";
+
 const CMD = "stefano@rpl:~$ npm run portofolio";
 const LOGS = [
   "vite v8.3.8 building...",
@@ -17,6 +19,7 @@ const EXIT_MS = 600;
  * prefers-reduced-motion: skip typing/progress, fade singkat.
  */
 export default function Loader({ onDone }: { onDone: () => void }) {
+  const { t } = useI18n();
   const reduced = useRef(
     window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -94,7 +97,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
   return (
     <div
       role="status"
-      aria-label="Memuat portofolio"
+      aria-label={t("loader.aria")}
       className={
         reduced.current
           ? `fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-bg-base transition-opacity duration-300 ${

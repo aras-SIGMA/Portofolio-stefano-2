@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 import { profile } from "../data/profile";
+import { useI18n, type TKey } from "../i18n";
 
-const links = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
-  { href: "#certifications", label: "Certification" },
-  { href: "#github", label: "GitHub" },
-  { href: "#contact", label: "Contact" },
+const links: { href: string; key: TKey }[] = [
+  { href: "#home", key: "nav.home" },
+  { href: "#about", key: "nav.about" },
+  { href: "#projects", key: "nav.projects" },
+  { href: "#skills", key: "nav.skills" },
+  { href: "#certifications", key: "nav.certifications" },
+  { href: "#github", key: "nav.github" },
+  { href: "#contact", key: "nav.contact" },
 ];
 
 export default function Navbar() {
+  const { lang, setLang, t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("#home");
   const [open, setOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress, scrollY } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   useEffect(() => {
@@ -26,6 +29,15 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Sembunyikan navbar saat scroll turun, muncul saat scroll naik
+  useEffect(() => {
+    return scrollY.on("change", (y) => {
+      const prev = (scrollY as any).prev ?? 0;
+      setHidden(y > prev && y > 120);
+      (scrollY as any).prev = y;
+    });
+  }, [scrollY]);
 
   // Scroll spy: tandai section yang sedang dilihat
   useEffect(() => {
@@ -45,7 +57,11 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <motion.header
+      animate={{ y: hidden && !open ? -72 : 0 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-0 top-0 z-50"
+    >
       <motion.div
         style={{ scaleX: progress }}
         className="h-0.5 origin-left bg-text-main"
@@ -78,7 +94,7 @@ export default function Navbar() {
                       : "text-text-muted hover:text-text-main"
                   }`}
                 >
-                  {link.label}
+                  {t(link.key)}
                   {active === link.href && (
                     <motion.span
                       layoutId="nav-active"
@@ -91,10 +107,27 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLang(lang === "id" ? "en" : "id")}
+              aria-label={t("nav.toggleLang")}
+              className="flex h-7 items-center rounded-full border border-surface-border px-2 font-mono text-[10px] uppercase tracking-widest text-text-muted transition-colors duration-200 hover:text-text-main"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={lang}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  {lang === "id" ? "ID" : "EN"}
+                </motion.span>
+              </AnimatePresence>
+            </button>
             <ThemeToggle />
             <button
               onClick={() => setOpen((o) => !o)}
-              aria-label="Buka menu"
+              aria-label={t("nav.openMenu")}
               aria-expanded={open}
               className="flex h-9 w-9 items-center justify-center rounded-full border border-surface-border md:hidden"
             >
@@ -106,29 +139,34 @@ export default function Navbar() {
         </div>
 
         {/* Mobile menu */}
-        {open && (
-          <motion.ul
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="border-t border-surface-border bg-bg-base px-6 py-4 md:hidden"
-          >
-            {links.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={`block py-2.5 text-sm ${
-                    active === link.href ? "text-text-main" : "text-text-muted"
-                  }`}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </motion.ul>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.ul
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden border-t border-surface-border bg-bg-base px-6 md:hidden"
+            >
+              <div className="py-4">
+                {links.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className={`block py-2.5 text-sm ${
+                        active === link.href ? "text-text-main" : "text-text-muted"
+                      }`}
+                    >
+                      {t(link.key)}
+                    </a>
+                  </li>
+                ))}
+              </div>
+            </motion.ul>
+          )}
+        </AnimatePresence>
       </nav>
-    </header>
+    </motion.header>
   );
 }

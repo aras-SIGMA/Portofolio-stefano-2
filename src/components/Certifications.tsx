@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { certifications, type CertificationCategory } from "../data/certifications";
+import { useI18n } from "../i18n";
 import { useIsDark } from "../hooks/useIsDark";
 import { Reveal } from "./motion/Reveal";
 import GlassFolder, { type FolderFile } from "./ui/glass-folder-cards";
@@ -58,6 +59,7 @@ function CategoryFolder({
 }
 
 export default function Certifications() {
+  const { t } = useI18n();
   const ref = useRef<HTMLElement>(null);
   // Progress line timeline: tumbuh mengikuti scroll
   const { scrollYProgress } = useScroll({
@@ -73,12 +75,10 @@ export default function Certifications() {
           Certification &amp; Training
         </p>
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          Sertifikasi &amp; Training
+          {t("certs.title")}
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-text-muted">
-          Semua sertifikat dikelompokkan per kategori. Arahkan kursor untuk
-          membuka map, klik untuk melihat isinya, lalu klik salah satu
-          sertifikat untuk memverifikasi di Dicoding.
+          {t("certs.subtitle")}
         </p>
       </Reveal>
 
@@ -110,7 +110,7 @@ export default function Certifications() {
               {c.title} — {c.issuer} {c.year}
               {c.link ? (
                 <a href={c.link} target="_blank" rel="noreferrer">
-                  verifikasi
+                  {t("certs.verify")}
                 </a>
               ) : null}
             </li>

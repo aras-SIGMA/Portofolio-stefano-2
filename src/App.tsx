@@ -9,6 +9,7 @@ import GithubStats from "./components/GithubStats";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
+import { LangProvider } from "./i18n";
 
 export default function App() {
   // Halaman di-mount setelah loading screen selesai,
@@ -16,23 +17,25 @@ export default function App() {
   const [ready, setReady] = useState(false);
 
   return (
-    <div className="min-h-screen scroll-smooth pt-16">
-      <Loader onDone={() => setReady(true)} />
-      {ready && (
-        <>
-          <Navbar />
-          <main>
-            <Hero />
-            <About />
-            <Projects />
-            <Skills />
-            <Certifications />
-            <GithubStats />
-            <Contact />
-          </main>
-          <Footer />
-        </>
-      )}
-    </div>
+    <LangProvider>
+      <div className="min-h-screen scroll-smooth pt-16">
+        <Loader onDone={() => setReady(true)} />
+        {ready && (
+          <>
+            <Navbar />
+            <main>
+              <Hero />
+              <About />
+              <Projects />
+              <Skills />
+              <Certifications />
+              <GithubStats />
+              <Contact />
+            </main>
+            <Footer />
+          </>
+        )}
+      </div>
+    </LangProvider>
   );
 }
