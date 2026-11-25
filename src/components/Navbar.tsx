@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
+import MobileNav from "./MobileNav";
+import { RandomLetterSwap } from "./ui/random-letter-swap";
 import { profile } from "../data/profile";
 import { useI18n, type TKey } from "../i18n";
 
@@ -56,24 +58,35 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  // Tutup menu mobile dengan tombol Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <motion.header
-      animate={{ y: hidden && !open ? -72 : 0 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-50"
-    >
-      <motion.div
-        style={{ scaleX: progress }}
-        className="h-0.5 origin-left bg-text-main"
-        aria-hidden="true"
-      />
-      <nav
-        className={`border-b transition-all duration-300 ${
-          scrolled
-            ? "border-surface-border bg-bg-base/85 backdrop-blur-md"
-            : "border-transparent bg-transparent"
-        }`}
+    <>
+      <motion.header
+        animate={{ y: hidden && !open ? -72 : 0 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed inset-x-0 top-0 z-50"
       >
+        <motion.div
+          style={{ scaleX: progress }}
+          className="h-0.5 origin-left bg-text-main"
+          aria-hidden="true"
+        />
+        <nav
+          className={`border-b transition-all duration-300 ${
+            scrolled || open
+              ? "border-surface-border bg-bg-base/95 backdrop-blur-md"
+              : "border-transparent bg-transparent"
+          }`}
+        >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <a
             href="#home"
@@ -94,7 +107,11 @@ export default function Navbar() {
                       : "text-text-muted hover:text-text-main"
                   }`}
                 >
-                  {t(link.key)}
+                  <RandomLetterSwap
+                    label={t(link.key)}
+                    staggerDuration={0.025}
+                    className="text-sm"
+                  />
                   {active === link.href && (
                     <motion.span
                       layoutId="nav-active"
@@ -129,7 +146,7 @@ export default function Navbar() {
               onClick={() => setOpen((o) => !o)}
               aria-label={t("nav.openMenu")}
               aria-expanded={open}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-surface-border md:hidden"
+              className="flex h-10 w-10 touch-manipulation items-center justify-center rounded-full border border-surface-border transition-transform active:scale-95 md:hidden"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 {open ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
@@ -137,36 +154,16 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {open && (
-            <motion.ul
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden border-t border-surface-border bg-bg-base px-6 md:hidden"
-            >
-              <div className="py-4">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      className={`block py-2.5 text-sm ${
-                        active === link.href ? "text-text-main" : "text-text-muted"
-                      }`}
-                    >
-                      {t(link.key)}
-                    </a>
-                  </li>
-                ))}
-              </div>
-            </motion.ul>
-          )}
-        </AnimatePresence>
       </nav>
-    </motion.header>
+      </motion.header>
+
+      {/* Mobile menu: fullscreen overlay ala Sterling Gate */}
+      <MobileNav
+        open={open}
+        onClose={() => setOpen(false)}
+        links={links}
+        active={active}
+      />
+    </>
   );
 }
