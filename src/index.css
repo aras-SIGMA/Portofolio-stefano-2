@@ -61,6 +61,14 @@ body {
   transition: background-color 250ms ease, color 250ms ease;
 }
 
+/* Scrollbar halaman disembunyikan; scroll tetap berfungsi */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
 /* Loading screen: baris log masuk satu per satu */
 @keyframes pc-log-in {
   from {
