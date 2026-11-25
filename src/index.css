@@ -1,23 +1,24 @@
 @import "tailwindcss";
 
 /*
-  Design tokens — see design.md
-  60-40-10: bg-base = 60% canvas, surface-card/accent-soft = 40% surfaces,
-  text-main/primary = 10% accent.
+  Design tokens — 60-30-10 (Obsidian #141416, Soft White #FAFAFA, Burgundy #6D001A)
+  60% Dominant: bg-base (#FAFAFA light / #141416 dark)
+  30% Secondary: surface-card, surface-border, accent-soft, text-muted
+  10% Accent: primary (#6D001A Burgundy)
 */
 @theme {
-  --color-bg-base: #f3f0e7;
-  --color-surface-card: #faf8f2;
-  --color-surface-border: #e3ded2;
-  --color-text-main: #2a2529;
-  --color-text-muted: #6e6660;
-  --color-primary: #2a2529;
-  --color-primary-contrast: #f3f0e7;
-  --color-accent-soft: #e9e3d5;
+  --color-bg-base: #fafafa;
+  --color-surface-card: #ffffff;
+  --color-surface-border: #e5e5e7;
+  --color-text-main: #141416;
+  --color-text-muted: #5a5a60;
+  --color-primary: #6d001a;
+  --color-primary-contrast: #fafafa;
+  --color-accent-soft: #f0f0f2;
 
   --color-success: #7a9b76;
   --color-warning: #c9a227;
-  --color-danger: #b4574e;
+  --color-danger: #6d001a;
 
   --font-display: "Poppins", "Space Grotesk", sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -26,16 +27,16 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Dark mode: tokens swap (charcoal canvas, ivory ink) */
+/* Dark mode: 60% Obsidian #141416 canvas, 30% dark surfaces, 10% Burgundy #6D001A accent */
 .dark {
-  --color-bg-base: #2a2529;
-  --color-surface-card: #332e32;
-  --color-surface-border: #453e43;
-  --color-text-main: #f3f0e7;
-  --color-text-muted: #a79e97;
-  --color-primary: #f3f0e7;
-  --color-primary-contrast: #2a2529;
-  --color-accent-soft: #3b353a;
+  --color-bg-base: #141416;
+  --color-surface-card: #1c1c1f;
+  --color-surface-border: #2c2c30;
+  --color-text-main: #f5f5f7;
+  --color-text-muted: #a1a1aa;
+  --color-primary: #6d001a;
+  --color-primary-contrast: #fafafa;
+  --color-accent-soft: #252529;
 }
 
 /* shadcn token aliases — ActivityHeatmap and other shadcn-style components

@@ -2,17 +2,19 @@ import HalftoneWordmarkFooter from "./ui/halftone-wordmark-footer";
 import { profile } from "../data/profile";
 import { useI18n } from "../i18n";
 import { useTheme } from "../hooks/useTheme";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function Footer() {
   const { t } = useI18n();
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   const isDark = theme === "dark";
 
-  // Warna footer mengikuti tema situs (design.md):
-  // light → Pale Ivory canvas + Charcoal ink; dark → Charcoal canvas + Ivory ink.
+  // Warna footer mengikuti tema situs (60-30-10):
+  // light → Soft White #FAFAFA + Obsidian #141416; dark → Obsidian #141416 + Soft White #F5F5F7; aksen → Burgundy #6D001A.
   const palette = isDark
-    ? { background: "#2a2529", ink: "#f3f0e7", warm: "#c9a227" }
-    : { background: "#f3f0e7", ink: "#2a2529", warm: "#b4574e" };
+    ? { background: "#141416", ink: "#f5f5f7", warm: "#6d001a" }
+    : { background: "#fafafa", ink: "#141416", warm: "#6d001a" };
 
   return (
     <div className="w-full">
@@ -46,7 +48,9 @@ export default function Footer() {
           },
         ]}
         palette={palette}
-        height="480px"
+        height={isMobile ? "460px" : "480px"}
+        dotGap={isMobile ? 8 : 6}
+        grain={isMobile ? 0 : 0.5}
       />
     </div>
   );
