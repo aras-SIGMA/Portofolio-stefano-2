@@ -113,7 +113,6 @@ export default function Hero() {
         >
           <ProfileCard
             avatarUrl="/profile.jpg"
-            miniAvatarUrl="/profile.jpg"
             name={profile.name}
             title={profile.roles[0]}
             handle={profile.username}
