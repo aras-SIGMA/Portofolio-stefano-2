@@ -11,10 +11,10 @@ export default function Footer() {
   const isDark = theme === "dark";
 
   // Warna footer mengikuti tema situs (60-30-10):
-  // light → Soft White #FAFAFA + Obsidian #141416; dark → Obsidian #141416 + Soft White #F5F5F7; aksen → Burgundy #6D001A.
+  // light → Soft White #FAFAFA + Obsidian #141416; dark → Obsidian #141416 + Soft White #F5F5F7; aksen → Denim Blue #1560BD.
   const palette = isDark
-    ? { background: "#141416", ink: "#f5f5f7", warm: "#6d001a" }
-    : { background: "#fafafa", ink: "#141416", warm: "#6d001a" };
+    ? { background: "#141416", ink: "#f5f5f7", warm: "#1560bd" }
+    : { background: "#fafafa", ink: "#141416", warm: "#1560bd" };
 
   return (
     <div className="w-full">

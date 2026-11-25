@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 /*
-  Design tokens — 60-30-10 (Obsidian #141416, Soft White #FAFAFA, Burgundy #6D001A)
+  Design tokens — 60-30-10 (Obsidian #141416, Soft White #FAFAFA, Denim Blue #1560BD)
   60% Dominant: bg-base (#FAFAFA light / #141416 dark)
   30% Secondary: surface-card, surface-border, accent-soft, text-muted
-  10% Accent: primary (#6D001A Burgundy)
+  10% Accent: primary (#1560BD Denim Blue)
 */
 @theme {
   --color-bg-base: #fafafa;
@@ -12,13 +12,13 @@
   --color-surface-border: #e5e5e7;
   --color-text-main: #141416;
   --color-text-muted: #5a5a60;
-  --color-primary: #6d001a;
+  --color-primary: #1560bd;
   --color-primary-contrast: #fafafa;
   --color-accent-soft: #f0f0f2;
 
   --color-success: #7a9b76;
   --color-warning: #c9a227;
-  --color-danger: #6d001a;
+  --color-danger: #b4574e;
 
   --font-display: "Poppins", "Space Grotesk", sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -27,14 +27,14 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Dark mode: 60% Obsidian #141416 canvas, 30% dark surfaces, 10% Burgundy #6D001A accent */
+/* Dark mode: 60% Obsidian #141416 canvas, 30% dark surfaces, 10% Denim Blue #1560BD accent */
 .dark {
   --color-bg-base: #141416;
   --color-surface-card: #1c1c1f;
   --color-surface-border: #2c2c30;
   --color-text-main: #f5f5f7;
   --color-text-muted: #a1a1aa;
-  --color-primary: #6d001a;
+  --color-primary: #1560bd;
   --color-primary-contrast: #fafafa;
   --color-accent-soft: #252529;
 }
