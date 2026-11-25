@@ -15,10 +15,6 @@ export type GlowCardGridProps = React.ComponentPropsWithoutRef<"div"> & {
 
   // Border parameters
   borderWidth?: number;
-  borderBlur?: number;
-  borderSaturate?: number;
-  borderBrightness?: number;
-  borderContrast?: number;
 
   children: React.ReactNode;
 };
@@ -33,10 +29,6 @@ export function GlowCardGrid({
   iconOpacity = 0.3,
 
   borderWidth = 3,
-  borderBlur = 10,
-  borderSaturate = 4.2,
-  borderBrightness = 2.5,
-  borderContrast = 2.5,
 
   className,
   style,
@@ -87,10 +79,6 @@ export function GlowCardGrid({
           "--card-icon-scale": iconScale,
           "--card-icon-opacity": iconOpacity,
           "--card-border-width": `${borderWidth}px`,
-          "--card-border-blur": `${borderBlur}px`,
-          "--card-border-saturate": borderSaturate,
-          "--card-border-brightness": borderBrightness,
-          "--card-border-contrast": borderContrast,
           ...style,
         } as React.CSSProperties
       }
@@ -142,8 +130,8 @@ export function GlowCard({ name, handle, avatar, className }: GlowCardProps) {
       <div
         className={cn(
           "pointer-events-none absolute inset-0 translate-z-0 rounded-(--card-radius)",
-          "border-(length:--card-border-width) border-solid border-transparent",
-          "backdrop-blur-(--card-border-blur) backdrop-brightness-(--card-border-brightness) backdrop-contrast-(--card-border-contrast) backdrop-saturate-(--card-border-saturate)",
+          "border-(length:--card-border-width) border-solid border-primary/40",
+          "backdrop-blur-[6px] backdrop-saturate-150",
           "[clip-path:inset(0_round_var(--card-radius))]",
         )}
         style={
