@@ -19,7 +19,7 @@ const id = {
   "nav.openMenu": "Buka menu",
   "nav.toggleLang": "Ganti bahasa ke Inggris",
 
-  "hero.badge": "Terbuka untuk Magang",
+  "hero.badge": "Terbuka untuk Bekerja",
   "hero.tagline":
     "Siswa RPL yang membangun produk web & mobile — dari ide, desain, sampai deploy.",
   "hero.viewProjects": "Lihat Project",
@@ -64,7 +64,7 @@ const id = {
   "github.focus": "Fokus",
   "github.status": "Status",
   "github.focusValue": "Web & Mobile",
-  "github.statusValue": "Terbuka untuk Magang",
+  "github.statusValue": "Terbuka untuk Bekerja",
   "github.lastYear": "kontribusi setahun terakhir",
   "github.sample": "contoh data — menunggu GitHub",
 
@@ -82,8 +82,8 @@ const id = {
   "theme.disableDark": "Matikan dark mode",
   "theme.enableDark": "Aktifkan dark mode",
 
-  "profile.statusFull": "Siswa Rekayasa Perangkat Lunak · Terbuka untuk Magang",
-  "profile.statusShort": "Terbuka untuk Magang",
+  "profile.statusFull": "Siswa Rekayasa Perangkat Lunak · Terbuka untuk Bekerja",
+  "profile.statusShort": "Terbuka untuk Bekerja",
 } as const;
 
 export type TKey = keyof typeof id;
@@ -99,7 +99,7 @@ const en: Record<TKey, string> = {
   "nav.openMenu": "Open menu",
   "nav.toggleLang": "Switch language to Indonesian",
 
-  "hero.badge": "Open to Internship",
+  "hero.badge": "Open to Work",
   "hero.tagline":
     "A software engineering student building web & mobile products — from idea, design, to deployment.",
   "hero.viewProjects": "View Projects",
@@ -144,7 +144,7 @@ const en: Record<TKey, string> = {
   "github.focus": "Focus",
   "github.status": "Status",
   "github.focusValue": "Web & Mobile",
-  "github.statusValue": "Open to Internship",
+  "github.statusValue": "Open to Work",
   "github.lastYear": "contributions in the last year",
   "github.sample": "sample data — waiting for GitHub",
 
@@ -162,22 +162,22 @@ const en: Record<TKey, string> = {
   "theme.disableDark": "Turn off dark mode",
   "theme.enableDark": "Turn on dark mode",
 
-  "profile.statusFull": "Software Engineering Student · Open to Internship",
-  "profile.statusShort": "Open to Internship",
+  "profile.statusFull": "Software Engineering Student · Open to Work",
+  "profile.statusShort": "Open to Work",
 };
 
 const dict: Record<Lang, Record<TKey, string>> = { id, en };
 
 function initialLang(): Lang {
   const stored = localStorage.getItem("lang");
-  return stored === "en" || stored === "id" ? stored : "id";
+  return stored === "en" || stored === "id" ? stored : "en";
 }
 
 const LangCtx = createContext<{
   lang: Lang;
   setLang: (l: Lang) => void;
   t: (k: TKey) => string;
-}>({ lang: "id", setLang: () => {}, t: (k) => id[k] });
+}>({ lang: "en", setLang: () => {}, t: (k) => en[k] });
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>(initialLang);
