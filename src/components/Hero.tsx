@@ -42,7 +42,7 @@ export default function Hero() {
 
       <motion.div
         style={{ y, opacity }}
-        className="relative grid w-full grid-cols-1 items-center gap-12 text-center lg:grid-cols-2 lg:gap-16 lg:text-left"
+        className="relative grid w-full grid-cols-1 items-center gap-16 text-center lg:grid-cols-2 lg:gap-24 lg:text-left"
       >
         {/* Kolom kiri: identitas */}
         <div>
