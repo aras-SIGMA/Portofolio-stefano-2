@@ -91,9 +91,12 @@ export default function Hero() {
               foldStyle="paper"
               hinge="top"
               trigger="mount"
-              duration={0.5}
+              duration={0.75}
               stagger={0.05}
-              creaseShading={0.25}
+              foldAngle={80}
+              perspective={900}
+              creaseShading={0.15}
+              ease="power2.out"
               fontSize="inherit"
               fontWeight="inherit"
               style={{ letterSpacing: "inherit", lineHeight: "inherit" }}

@@ -13,10 +13,12 @@ export default function LangTitle({ k }: { k: TKey }) {
       foldStyle="paper"
       hinge="top"
       trigger="mount"
-      duration={0.55}
+      duration={0.75}
       stagger={0.028}
-      foldAngle={92}
-      creaseShading={0.3}
+      foldAngle={80}
+      perspective={900}
+      creaseShading={0.18}
+      ease="power2.out"
       fontSize="clamp(1.875rem, 4vw, 2.25rem)"
       fontWeight={600}
       style={{ letterSpacing: "-0.025em", lineHeight: 1.1 }}
