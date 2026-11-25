@@ -1,5 +1,6 @@
 import { profile } from "../data/profile";
 import { useI18n } from "../i18n";
+import LangTitle from "./LangTitle";
 import { Reveal, RevealItem, RevealStagger } from "./motion/Reveal";
 import { useGithubActivity } from "../hooks/useGithubActivity";
 import ActivityHeatmap from "./ui/activity-heatmap";
@@ -15,26 +16,26 @@ export default function GithubStats() {
   ];
 
   return (
-    <section id="github" className="mx-auto max-w-6xl px-6 py-20">
+    <section id="github" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.08em] text-text-muted">
           GitHub
         </p>
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t("github.title")}
+          <LangTitle k="github.title" />
         </h2>
       </Reveal>
 
-      <RevealStagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <RevealStagger className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-6 lg:grid-cols-4">
         {stats.map((item) => (
           <RevealItem
             key={item.label}
-            className="rounded-2xl border border-surface-border bg-surface-card p-6"
+            className="rounded-2xl border border-surface-border bg-surface-card p-4 sm:p-6"
           >
             <p className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
               {item.label}
             </p>
-            <p className="mt-2 font-display text-3xl font-semibold">
+            <p className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
               {item.value}
             </p>
           </RevealItem>
@@ -46,15 +47,15 @@ export default function GithubStats() {
           href={profile.github}
           target="_blank"
           rel="noreferrer"
-          className="mt-8 inline-flex items-center gap-2 rounded-full border border-surface-border px-6 py-3 text-sm font-medium transition-colors duration-200 hover:bg-accent-soft"
+          className="mt-6 inline-flex touch-manipulation items-center gap-2 rounded-full border border-surface-border px-6 py-3 text-sm font-medium transition-all duration-200 hover:bg-accent-soft active:scale-[0.98] sm:mt-8"
         >
           <GithubIcon />
           github.com/{profile.username}
         </a>
       </Reveal>
 
-      <Reveal delay={0.25} className="mt-8">
-        <div className="rounded-2xl border border-surface-border bg-surface-card p-6">
+      <Reveal delay={0.25} className="mt-6 sm:mt-8">
+        <div className="rounded-2xl border border-surface-border bg-surface-card p-4 sm:p-6">
           <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="font-display text-base font-semibold">
               Contribution Graph

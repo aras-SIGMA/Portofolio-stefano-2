@@ -3,6 +3,8 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { certifications, type CertificationCategory } from "../data/certifications";
 import { useI18n } from "../i18n";
 import { useIsDark } from "../hooks/useIsDark";
+import { useIsMobile } from "../hooks/useIsMobile";
+import LangTitle from "./LangTitle";
 import { Reveal } from "./motion/Reveal";
 import GlassFolder, { type FolderFile } from "./ui/glass-folder-cards";
 
@@ -24,9 +26,11 @@ const CATEGORIES: CertificationCategory[] = [
 function CategoryFolder({
   category,
   index,
+  folderWidth,
 }: {
   category: CertificationCategory;
   index: number;
+  folderWidth: number;
 }) {
   const isDark = useIsDark();
   const items = useMemo(
@@ -52,7 +56,7 @@ function CategoryFolder({
       seed={index * 7 + 3}
       files={items}
       action="none"
-      width={340}
+      width={folderWidth}
       className="max-w-full"
     />
   );
@@ -60,6 +64,7 @@ function CategoryFolder({
 
 export default function Certifications() {
   const { t } = useI18n();
+  const isMobile = useIsMobile();
   const ref = useRef<HTMLElement>(null);
   // Progress line timeline: tumbuh mengikuti scroll
   const { scrollYProgress } = useScroll({
@@ -69,20 +74,20 @@ export default function Certifications() {
   const lineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 25 });
 
   return (
-    <section ref={ref} id="certifications" className="mx-auto max-w-6xl px-6 py-20">
+    <section ref={ref} id="certifications" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.08em] text-text-muted">
           Certification &amp; Training
         </p>
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t("certs.title")}
+          <LangTitle k="certs.title" />
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-text-muted">
           {t("certs.subtitle")}
         </p>
       </Reveal>
 
-      <div className="relative mt-10 pl-6">
+      <div className="relative mt-8 pl-4 sm:mt-10 sm:pl-6">
         {/* Track + progress line */}
         <div className="absolute left-0 top-0 h-full w-px bg-surface-border" />
         <motion.div
@@ -90,7 +95,7 @@ export default function Certifications() {
           className="absolute left-0 top-0 h-full w-px origin-top bg-text-main"
         />
 
-        <div className="flex flex-wrap items-end justify-center gap-x-10 gap-y-16 py-6">
+        <div className="flex flex-wrap items-end justify-center gap-x-10 gap-y-10 py-4 sm:gap-y-16 sm:py-6">
           {CATEGORIES.map((category, i) => (
             <motion.div
               key={category}
@@ -99,7 +104,11 @@ export default function Certifications() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
             >
-              <CategoryFolder category={category} index={i} />
+              <CategoryFolder
+                category={category}
+                index={i}
+                folderWidth={isMobile ? 268 : 340}
+              />
             </motion.div>
           ))}
         </div>

@@ -2,7 +2,6 @@ import {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -182,26 +181,10 @@ const LangCtx = createContext<{
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>(initialLang);
-  const mounted = useRef(false);
 
   useEffect(() => {
     localStorage.setItem("lang", lang);
     document.documentElement.lang = lang;
-
-    // Animasi teks tiap bahasa berganti (tanpa remount), lewati mount pertama.
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
-    const root = document.documentElement;
-    root.classList.remove("lang-swap");
-    void root.offsetWidth;
-    root.classList.add("lang-swap");
-    const timer = window.setTimeout(
-      () => root.classList.remove("lang-swap"),
-      400,
-    );
-    return () => window.clearTimeout(timer);
   }, [lang]);
 
   const t = (k: TKey) => dict[lang][k];

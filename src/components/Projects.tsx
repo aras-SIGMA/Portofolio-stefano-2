@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import { useI18n } from "../i18n";
+import LangTitle from "./LangTitle";
 import { Reveal } from "./motion/Reveal";
 import { GlowCard, GlowCardGrid } from "./ui/glow-card-grid";
 
@@ -20,30 +21,30 @@ export default function Projects() {
   const { projects, loading } = useGithubRepos();
 
   return (
-    <section id="projects" className="relative mx-auto max-w-6xl px-6 py-20">
+    <section id="projects" className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.08em] text-text-muted">
           Projects
         </p>
         <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          Project &amp; Karya
+          <LangTitle k="projects.title" />
         </h2>
-        <p className="mt-4 max-w-xl text-text-muted">
+        <p className="mt-4 max-w-xl text-sm text-text-muted sm:text-base">
           {t("projects.subtitle")}
         </p>
       </Reveal>
 
       {loading ? (
-        <GlowCardGrid className="mt-10">
+        <GlowCardGrid className="mt-8 sm:mt-10">
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="h-52 w-full animate-pulse rounded-2xl bg-surface-card"
+              className="h-44 w-full animate-pulse rounded-2xl bg-surface-card sm:h-52"
             />
           ))}
         </GlowCardGrid>
       ) : (
-        <GlowCardGrid className="mt-10">
+        <GlowCardGrid className="mt-8 sm:mt-10">
           {projects.map((p, i) => (
             <motion.a
               key={p.repo}
