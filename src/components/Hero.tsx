@@ -50,20 +50,11 @@ export default function Hero() {
       >
         {/* Kolom kiri: identitas */}
         <div>
-          <motion.div
-            initial={{ y: 8, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
-            className="mx-auto w-fit rounded-full border border-surface-border bg-surface-card px-3 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text-muted lg:mx-0"
-          >
-            {t("hero.badge")}
-          </motion.div>
-
           <motion.h1
             initial={{ y: 16, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="mt-6 font-display text-5xl font-semibold tracking-tight sm:text-6xl"
+            className="font-display text-5xl font-semibold tracking-tight sm:text-6xl"
           >
             {profile.name}
           </motion.h1>

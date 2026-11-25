@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 import MobileNav from "./MobileNav";
@@ -22,6 +22,7 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("#home");
   const [open, setOpen] = useState(false);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
   const { scrollYProgress, scrollY } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
@@ -77,7 +78,7 @@ export default function Navbar() {
       >
         <motion.div
           style={{ scaleX: progress }}
-          className="h-0.5 origin-left bg-text-main"
+          className="h-0.5 origin-left bg-primary"
           aria-hidden="true"
         />
         <nav
@@ -87,13 +88,13 @@ export default function Navbar() {
               : "border-transparent bg-transparent"
           }`}
         >
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <a
             href="#home"
             className="font-display text-lg font-semibold tracking-tight"
           >
             {profile.name}
-            <span className="text-text-muted">.</span>
+            <span className="text-primary">.</span>
           </a>
 
           <ul className="hidden items-center gap-6 md:flex">
@@ -115,7 +116,7 @@ export default function Navbar() {
                   {active === link.href && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-text-main"
+                      className="absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-primary"
                     />
                   )}
                 </a>
@@ -123,11 +124,11 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setLang(lang === "id" ? "en" : "id")}
               aria-label={t("nav.toggleLang")}
-              className="flex h-7 items-center rounded-full border border-surface-border px-2 font-mono text-[10px] uppercase tracking-widest text-text-muted transition-colors duration-200 hover:text-text-main"
+              className="flex h-9 touch-manipulation items-center rounded-full border border-surface-border px-2.5 font-mono text-[10px] uppercase tracking-widest text-text-muted transition-colors duration-200 hover:text-text-main active:scale-95 sm:h-7 sm:px-2"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -143,10 +144,12 @@ export default function Navbar() {
             </button>
             <ThemeToggle />
             <button
+              ref={menuBtnRef}
               onClick={() => setOpen((o) => !o)}
               aria-label={t("nav.openMenu")}
               aria-expanded={open}
-              className="flex h-10 w-10 touch-manipulation items-center justify-center rounded-full border border-surface-border transition-transform active:scale-95 md:hidden"
+              aria-controls="mobile-nav-dialog"
+              className="flex h-10 w-10 touch-manipulation items-center justify-center rounded-full border border-surface-border bg-surface-card/70 transition-transform active:scale-95 md:hidden"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 {open ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
@@ -157,10 +160,13 @@ export default function Navbar() {
       </nav>
       </motion.header>
 
-      {/* Mobile menu: fullscreen overlay ala Sterling Gate */}
+      {/* Mobile menu: fullscreen editorial drawer */}
       <MobileNav
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          menuBtnRef.current?.focus();
+        }}
         links={links}
         active={active}
       />
