@@ -19,7 +19,7 @@ const id = {
   "nav.openMenu": "Buka menu",
   "nav.toggleLang": "Ganti bahasa ke Inggris",
 
-  "hero.badge": "Open to PKL",
+  "hero.badge": "Terbuka untuk Magang",
   "hero.tagline":
     "Siswa RPL yang membangun produk web & mobile — dari ide, desain, sampai deploy.",
   "hero.viewProjects": "Lihat Project",
@@ -29,7 +29,7 @@ const id = {
   "about.p1":
     "Halo, saya Stefano — siswa Rekayasa Perangkat Lunak dari Depok. Saya suka mengubah ide menjadi aplikasi yang benar-benar bisa dipakai, dari web hingga mobile.",
   "about.p2":
-    "Saya fokus di frontend (React, Flutter) namun juga membangun backend sendiri (Node.js/Express) untuk project pribadi. Saat ini saya sedang mencari kesempatan PKL untuk belajar langsung di lingkungan industri, berkontribusi pada produk nyata, dan mempercepat pertumbuhan saya sebagai developer.",
+    "Saya fokus di frontend (React, Flutter) namun juga membangun backend sendiri (Node.js/Express) untuk project pribadi. Saat ini saya sedang mencari kesempatan magang untuk belajar langsung di lingkungan industri, berkontribusi pada produk nyata, dan mempercepat pertumbuhan saya sebagai developer.",
   "about.name": "Nama",
   "about.location": "Lokasi",
   "about.status": "Status",
@@ -64,13 +64,13 @@ const id = {
   "github.focus": "Fokus",
   "github.status": "Status",
   "github.focusValue": "Web & Mobile",
-  "github.statusValue": "Open to PKL",
+  "github.statusValue": "Terbuka untuk Magang",
   "github.lastYear": "kontribusi setahun terakhir",
   "github.sample": "contoh data — menunggu GitHub",
 
   "contact.title": "Mari Terhubung",
   "contact.subtitle":
-    "Terbuka untuk kesempatan PKL, kolaborasi project, atau sekadar diskusi seputar web & mobile development.",
+    "Terbuka untuk kesempatan magang, kolaborasi project, atau sekadar diskusi seputar web & mobile development.",
 
   "footer.work": "Work",
   "footer.social": "Social",
@@ -82,8 +82,8 @@ const id = {
   "theme.disableDark": "Matikan dark mode",
   "theme.enableDark": "Aktifkan dark mode",
 
-  "profile.statusFull": "Siswa Rekayasa Perangkat Lunak · Siap PKL",
-  "profile.statusShort": "Siap PKL",
+  "profile.statusFull": "Siswa Rekayasa Perangkat Lunak · Terbuka untuk Magang",
+  "profile.statusShort": "Terbuka untuk Magang",
 } as const;
 
 export type TKey = keyof typeof id;
@@ -99,7 +99,7 @@ const en: Record<TKey, string> = {
   "nav.openMenu": "Open menu",
   "nav.toggleLang": "Switch language to Indonesian",
 
-  "hero.badge": "Open to PKL",
+  "hero.badge": "Open to Internship",
   "hero.tagline":
     "A software engineering student building web & mobile products — from idea, design, to deployment.",
   "hero.viewProjects": "View Projects",
@@ -109,7 +109,7 @@ const en: Record<TKey, string> = {
   "about.p1":
     "Hi, I'm Stefano — a software engineering student from Depok. I love turning ideas into applications people can actually use, from web to mobile.",
   "about.p2":
-    "I focus on frontend (React, Flutter) while also building my own backends (Node.js/Express) for personal projects. Right now I'm looking for an internship (PKL) to learn directly in a real industry environment, contribute to real products, and accelerate my growth as a developer.",
+    "I focus on frontend (React, Flutter) while also building my own backends (Node.js/Express) for personal projects. Right now I'm looking for an internship to learn directly in a real industry environment, contribute to real products, and accelerate my growth as a developer.",
   "about.name": "Name",
   "about.location": "Location",
   "about.status": "Status",
@@ -144,13 +144,13 @@ const en: Record<TKey, string> = {
   "github.focus": "Focus",
   "github.status": "Status",
   "github.focusValue": "Web & Mobile",
-  "github.statusValue": "Open to PKL",
+  "github.statusValue": "Open to Internship",
   "github.lastYear": "contributions in the last year",
   "github.sample": "sample data — waiting for GitHub",
 
   "contact.title": "Let's Connect",
   "contact.subtitle":
-    "Open to internship (PKL) opportunities, project collaboration, or just a chat about web & mobile development.",
+    "Open to internship opportunities, project collaboration, or just a chat about web & mobile development.",
 
   "footer.work": "Work",
   "footer.social": "Social",
@@ -162,8 +162,8 @@ const en: Record<TKey, string> = {
   "theme.disableDark": "Turn off dark mode",
   "theme.enableDark": "Turn on dark mode",
 
-  "profile.statusFull": "Software Engineering Student · Open to PKL",
-  "profile.statusShort": "Open to PKL",
+  "profile.statusFull": "Software Engineering Student · Open to Internship",
+  "profile.statusShort": "Open to Internship",
 };
 
 const dict: Record<Lang, Record<TKey, string>> = { id, en };
