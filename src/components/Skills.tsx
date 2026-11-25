@@ -1,7 +1,48 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  ApiIcon,
+  CodeIcon,
+  CloudIcon,
+  Css3Icon,
+  DartIcon,
+  FigmaIcon,
+  GitBranchIcon,
+  Html5Icon,
+  JavaScriptIcon,
+  MobileProgramming01Icon,
+  PythonIcon,
+  ReactIcon,
+  ServerCogIcon,
+  ShieldKeyIcon,
+  TailwindcssIcon,
+  TerminalIcon,
+  Typescript01Icon,
+} from "@hugeicons/core-free-icons";
 import { skillGroups } from "../data/skills";
 import { Reveal } from "./motion/Reveal";
+
+// Icon per skill; fallback CodeIcon untuk yang tidak punya brand icon di free set
+const skillIcons: Record<string, typeof CodeIcon> = {
+  HTML: Html5Icon,
+  CSS: Css3Icon,
+  JavaScript: JavaScriptIcon,
+  React: ReactIcon,
+  Svelte: CodeIcon,
+  "Tailwind CSS": TailwindcssIcon,
+  Flutter: MobileProgramming01Icon,
+  Dart: DartIcon,
+  "Node.js": TerminalIcon,
+  Express: ServerCogIcon,
+  "REST API": ApiIcon,
+  "JWT Auth": ShieldKeyIcon,
+  TypeScript: Typescript01Icon,
+  Python: PythonIcon,
+  Git: GitBranchIcon,
+  Vercel: CloudIcon,
+  Figma: FigmaIcon,
+};
 
 export default function Skills() {
   const ref = useRef<HTMLElement>(null);
@@ -54,8 +95,15 @@ export default function Skills() {
                     key={skill}
                     whileHover={{ y: -2 }}
                     transition={{ duration: 0.15 }}
-                    className="cursor-default rounded-full bg-accent-soft px-3 py-1.5 text-sm font-medium text-text-main"
+                    className="flex cursor-default items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-sm font-medium text-text-main"
                   >
+                    <HugeiconsIcon
+                      icon={skillIcons[skill] ?? CodeIcon}
+                      size={14}
+                      strokeWidth={1.8}
+                      className="shrink-0 text-text-muted"
+                      aria-hidden
+                    />
                     {skill}
                   </motion.li>
                 ))}
