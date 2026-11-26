@@ -1,14 +1,13 @@
 import HalftoneWordmarkFooter from "./ui/halftone-wordmark-footer";
 import { profile } from "../data/profile";
 import { useI18n } from "../i18n";
-import { useTheme } from "../hooks/useTheme";
+import { useIsDark } from "../hooks/useIsDark";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function Footer() {
   const { t } = useI18n();
-  const { theme } = useTheme();
+  const isDark = useIsDark();
   const isMobile = useIsMobile();
-  const isDark = theme === "dark";
 
   // Warna footer mengikuti tema situs (60-30-10):
   // light → Soft White #FAFAFA + Obsidian #141416; dark → Obsidian #141416 + Soft White #F5F5F7; aksen → Denim Blue #1560BD.

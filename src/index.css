@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /*
   Design tokens — 60-30-10 (Obsidian #141416, Soft White #FAFAFA, Denim Blue #1560BD)
@@ -31,12 +32,12 @@
 .dark {
   --color-bg-base: #141416;
   --color-surface-card: #1c1c1f;
-  --color-surface-border: #2c2c30;
+  --color-surface-border: #34343a;
   --color-text-main: #f5f5f7;
-  --color-text-muted: #a1a1aa;
+  --color-text-muted: #a8a8b2;
   --color-primary: #1560bd;
   --color-primary-contrast: #fafafa;
-  --color-accent-soft: #252529;
+  --color-accent-soft: #26262b;
 }
 
 /* shadcn token aliases — ActivityHeatmap and other shadcn-style components
@@ -80,5 +81,55 @@ html::-webkit-scrollbar {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* View Transition untuk toggle tema: bayangan ditarik menuju / menyebar dari switch */
+@keyframes vt-expand {
+  from {
+    clip-path: circle(0px at var(--vt-x) var(--vt-y));
+  }
+  to {
+    clip-path: circle(var(--vt-r) at var(--vt-x) var(--vt-y));
+  }
+}
+
+@keyframes vt-shrink {
+  from {
+    clip-path: circle(var(--vt-r) at var(--vt-x) var(--vt-y));
+  }
+  to {
+    clip-path: circle(0px at var(--vt-x) var(--vt-y));
+  }
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.vt-to-light::view-transition-old(root) {
+  z-index: 9999;
+  animation: vt-shrink 650ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+html.vt-to-light::view-transition-new(root) {
+  z-index: 1;
+}
+
+html.vt-to-dark::view-transition-old(root) {
+  z-index: 1;
+}
+html.vt-to-dark::view-transition-new(root) {
+  z-index: 9999;
+  animation: vt-expand 650ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+html.vt-active,
+html.vt-active *:not([role="switch"]):not([role="switch"] *) {
+  transition: none !important;
 }
 
