@@ -34,14 +34,14 @@ export default function Hero() {
       {/* Background: grid interaktif mengikuti pointer (cell lebih besar di mobile agar node SVG lebih ringan) */}
       <InteractiveGrid
         cellSize={isMobile ? 60 : 44}
-        className="text-text-main opacity-60 [mask-image:radial-gradient(70%_60%_at_50%_45%,white,transparent)]"
+        className="text-text-main opacity-80 dark:opacity-100 [mask-image:radial-gradient(80%_70%_at_50%_45%,white,transparent)]"
       />
 
       {/* Background parallax: lingkaran tonal mengikuti scroll */}
       <motion.div
         style={{ y: orbY }}
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-accent-soft opacity-60 blur-2xl sm:h-96 sm:w-96 sm:blur-3xl"
+        className="pointer-events-none absolute -top-24 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-accent-soft opacity-80 blur-2xl dark:bg-primary/15 sm:h-96 sm:w-96 sm:blur-3xl"
       />
 
       <motion.div

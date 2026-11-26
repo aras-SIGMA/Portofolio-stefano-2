@@ -92,7 +92,7 @@ export default function Certifications() {
         <div className="absolute left-0 top-0 h-full w-px bg-surface-border" />
         <motion.div
           style={{ scaleY: lineScale }}
-          className="absolute left-0 top-0 h-full w-px origin-top bg-text-main"
+          className="absolute left-0 top-0 h-full w-px origin-top bg-primary"
         />
 
         <div className="flex flex-wrap items-end justify-center gap-x-10 gap-y-10 py-4 sm:gap-y-16 sm:py-6">

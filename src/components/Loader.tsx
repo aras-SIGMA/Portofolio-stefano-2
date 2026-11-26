@@ -111,7 +111,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
       {/* Hiasan: dot grid halus di background */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 text-text-muted opacity-[0.12]"
+        className="pointer-events-none absolute inset-0 text-text-muted opacity-[0.16] dark:opacity-[0.22]"
         style={{
           backgroundImage:
             "radial-gradient(circle, currentColor 1px, transparent 1px)",

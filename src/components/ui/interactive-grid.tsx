@@ -80,12 +80,12 @@ export function InteractiveGrid({
           height={cellSize}
           fill="currentColor"
           stroke="currentColor"
-          strokeOpacity={0.1}
+          strokeOpacity={0.18}
           // Light up at once, then fade out slowly once the pointer has left.
           className={cn(
             "transition-[fill-opacity] ease-out motion-reduce:transition-none",
             index === active
-              ? "duration-0 [fill-opacity:0.15]"
+              ? "duration-0 [fill-opacity:0.22]"
               : "duration-1000 [fill-opacity:0]",
           )}
         />

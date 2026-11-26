@@ -70,7 +70,7 @@ export default function Skills() {
         <motion.p
           style={{ x }}
           aria-hidden="true"
-          className="whitespace-nowrap font-display text-[18vw] font-bold leading-none text-text-main opacity-[0.04]"
+          className="whitespace-nowrap font-display text-[18vw] font-bold leading-none text-text-main opacity-[0.08] dark:opacity-[0.14]"
         >
           SKILLS · TOOLS · SKILLS · TOOLS
         </motion.p>
