@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { profile } from "../data/profile";
 import { useI18n } from "../i18n";
 import LangTitle from "./LangTitle";
@@ -8,9 +9,34 @@ import ActivityHeatmap from "./ui/activity-heatmap";
 export default function GithubStats() {
   const { t } = useI18n();
   const { data, live } = useGithubActivity(profile.username);
+  const [counts, setCounts] = useState({ repos: "22", followers: "9" });
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`https://api.github.com/users/${encodeURIComponent(profile.username)}`, {
+      signal: controller.signal,
+      cache: "no-store",
+    })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((u: unknown) => {
+        if (!u || typeof u !== "object") return;
+        const rec = u as Record<string, unknown>;
+        const repos = typeof rec.public_repos === "number" ? String(rec.public_repos) : null;
+        const followers = typeof rec.followers === "number" ? String(rec.followers) : null;
+        if (repos || followers) {
+          setCounts((prev) => ({
+            repos: repos ?? prev.repos,
+            followers: followers ?? prev.followers,
+          }));
+        }
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
+
   const stats = [
-    { label: t("github.repos"), value: "22" },
-    { label: t("github.followers"), value: "9" },
+    { label: t("github.repos"), value: counts.repos },
+    { label: t("github.followers"), value: counts.followers },
     { label: t("github.focus"), value: t("github.focusValue") },
     { label: t("github.status"), value: t("github.statusValue") },
   ];

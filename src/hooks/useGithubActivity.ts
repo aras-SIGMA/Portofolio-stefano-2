@@ -35,7 +35,7 @@ export function useGithubActivity(username: string) {
 
     fetch(
       `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=last`,
-      { signal: controller.signal },
+      { signal: controller.signal, cache: "no-store" },
     )
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((json: unknown) => {
